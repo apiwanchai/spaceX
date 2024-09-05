@@ -27,11 +27,17 @@
   <v-dialog
     v-model="dialog"
     width="400px"
+    persistent
   >
     <v-card max-width="400" class="pa-5">
-      <img :src="image" alt="Launch Image" />
+      <img v-if="image !== null" :src="image" alt="Launch Image" />
+      <div  v-else   class="mx-auto" >
+        <p class="text-center">No Image</p>
+        <v-icon size="100px" class="mt-10">mdi-image-off-outline</v-icon>
+      </div>
+      
       <template v-slot:actions>
-        <v-btn class="ms-auto" text @click="dialog = false">Ok</v-btn>
+        <v-btn class="ms-auto" text @click="dialog = false">Close</v-btn>
       </template>
     </v-card>
   </v-dialog>
@@ -39,7 +45,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useLaunchStore } from '../stores/launches.js';
+import { useLaunchStore } from '@/stores/launches.js';
 import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['launchSelected']);
